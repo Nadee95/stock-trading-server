@@ -68,17 +68,7 @@ Follow the installation instructions in the [grpcurl GitHub repository](https://
 
 3. Get stock information:
    ```
-   grpcurl -plaintext -d '{"symbol": "AAPL"}' localhost:9090 com.nadeex.stocktrading.StockTradingService/GetStockInfo
-   ```
-
-4. Place a buy order:
-   ```
-   grpcurl -plaintext -d '{"symbol": "AAPL", "quantity": 10, "price": 150.00}' localhost:9090 com.nadeex.stocktrading.StockTradingService/PlaceBuyOrder
-   ```
-
-5. Place a sell order:
-   ```
-   grpcurl -plaintext -d '{"symbol": "AAPL", "quantity": 5, "price": 155.00}' localhost:9090 com.nadeex.stocktrading.StockTradingService/PlaceSellOrder
+   grpcurl -plaintext -d '{"stock_symbol": "AMZN"}' localhost:9090 com.nadeex.stocktrading.StockTradingService/getStockPrice
    ```
 
 ## Configuration
