@@ -7,7 +7,6 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.grpc.server.service.GrpcService;
 import com.nadeex.stock_trading_server.repository.StockRepository;
 
-import java.sql.SQLOutput;
 import java.time.Instant;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -72,7 +71,7 @@ public class StockTradingServiceImpl extends StockTradingServiceGrpc.StockTradin
     public StreamObserver<StockOrder> bulkStockOrder(StreamObserver<OrderSummary> responseObserver) {
 
 
-        return new StreamObserver<StockOrder>() {
+        return new StreamObserver<>() {
             private int totalOrders = 0;
             private double totalAmount = 0.0;
             private int successCount = 0;
@@ -81,7 +80,7 @@ public class StockTradingServiceImpl extends StockTradingServiceGrpc.StockTradin
             public void onNext(StockOrder stockOrder) {
                 totalOrders++;
                 totalAmount += stockOrder.getQuantity() * stockOrder.getPrice();
-                successCount ++;
+                successCount++;
                 System.out.println("Received order: " + stockOrder.getStockSymbol() + ", Quantity: " + stockOrder.getQuantity() + ", Price: " + stockOrder.getPrice());
             }
 
