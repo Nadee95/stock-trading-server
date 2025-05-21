@@ -98,6 +98,7 @@ public class StockTradingServiceImpl extends StockTradingServiceGrpc.StockTradin
                         .build();
                 responseObserver.onNext(orderSummary);
                 responseObserver.onCompleted();
+                System.out.println("Bulk order completed. Total orders: " + totalOrders + ", Total amount: " + totalAmount + ", Successful orders: " + successCount);
             }
         };
     }
