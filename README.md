@@ -75,6 +75,10 @@ Follow the installation instructions in the [grpcurl GitHub repository](https://
    ```
    grpcurl -d @ -plaintext -import-path "C:\path\to\stock-trading-server\src\main\proto" -proto stock_trading.proto localhost:9090 com.nadeex.stocktrading.StockTradingService/bulkStockOrder < bulk_orders.json
    ```
+5. Bidirectional streaming:
+   ```
+   grpcurl -d @ -plaintext -import-path "C:\path\to\stock-trading-server\src\main\proto" -proto stock_trading.proto localhost:9090 com.nadeex.stocktrading.StockTradingService/liveTrading < stream_orders.json
+   ```
 
 ## Configuration
 

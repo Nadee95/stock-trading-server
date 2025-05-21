@@ -8,6 +8,8 @@ import org.springframework.grpc.server.service.GrpcService;
 import com.nadeex.stock_trading_server.repository.StockRepository;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -99,6 +101,45 @@ public class StockTradingServiceImpl extends StockTradingServiceGrpc.StockTradin
                 responseObserver.onNext(orderSummary);
                 responseObserver.onCompleted();
                 System.out.println("Bulk order completed. Total orders: " + totalOrders + ", Total amount: " + totalAmount + ", Successful orders: " + successCount);
+            }
+        };
+    }
+
+    @Override
+    public StreamObserver<StockOrder> liveTrading(StreamObserver<TradeStatus> responseObserver) {
+
+        return new StreamObserver<>() {
+
+            @Override
+            public void onNext(StockOrder stockOrder) {
+                System.out.println("Received live order: " + stockOrder.getStockSymbol() + ", Quantity: " + stockOrder.getQuantity() + ", Price: " + stockOrder.getPrice());
+
+                String status = "EXECUTED";
+                String message = "Order executed successfully";
+                if (stockOrder.getQuantity() <= 0) {
+                    status = "FAILED";
+                    message = "Order execution failed";
+                }
+
+                TradeStatus tradeStatus = TradeStatus.newBuilder()
+                        .setStatus(status)
+                        .setMessage(message)
+                        .setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                        .build();
+
+
+                responseObserver.onNext(tradeStatus);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println("Error: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                responseObserver.onCompleted();
+                System.out.println("Live trading completed.");
             }
         };
     }
