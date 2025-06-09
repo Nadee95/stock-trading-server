@@ -1,4 +1,4 @@
-Here's a README.md file for your stock trading server project:
+
 
 # Stock Trading Server
 
